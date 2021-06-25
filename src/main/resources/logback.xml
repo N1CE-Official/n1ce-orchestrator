@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<springProperty name="rootLogLevel" source="logback.root.log.level" />
+	<springProperty name="findomesticLogLevel" source="logback.findomestic.log.level" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %level %logger{35} [%X{PID};%X{CID};%X{SID};%X{RID};%X{QID}] - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+	
+    <appender name="correlationSTDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%8.8X{USR}] [%4.4X{APP}] [%15.15X{CLI}] [%15.15X{SRV}] %X{DRCT} [%X{PID};%X{CID};%X{SID};%X{RID};%X{QID}] [%m] [%X{RSPELTM}]%n
+            </Pattern>
+        </encoder>
+
+    </appender>
+	
+    <logger name="CorrelationLogger" level="INFO" >
+        <appender-ref ref="correlationSTDOUT" />
+    </logger>
+
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
