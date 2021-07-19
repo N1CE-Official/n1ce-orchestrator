@@ -1,0 +1,7 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="timer://monitorStart?repeatCount=1" />
+        <log message="Avvio monitorStart {headers} ------ {body}" loggingLevel="INFO" logName="n1ce.monitor"/>
+        <process ref="dummyLookProcessor"/>
+    </route>
+</routes>

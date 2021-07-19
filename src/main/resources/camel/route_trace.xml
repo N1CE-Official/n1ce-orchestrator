@@ -1,0 +1,9 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="tracciaDati">
+        <from uri="direct:tracciaDati" />
+        <log message="Richiesta Header ${headers} Body ${body} " loggingLevel="INFO"  />
+        <process ref="dummyLookProcessor"/>
+    </route>
+</routes>
+
+

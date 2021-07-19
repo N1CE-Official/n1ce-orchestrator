@@ -1,5 +1,9 @@
 package nice.orchestration.controller;
 
+import java.util.Map;
+
+import org.apache.camel.Produce;
+import org.apache.camel.ProducerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,19 +23,22 @@ public class OrchestrationController {
 //	@Autowired
 //	private CamelService camelService;
 	
+	@Produce
+	private ProducerTemplate producerTemplate;
+	
 	
 	@GetMapping("/version")
 	public ResponseEntity<RestResponse<String>> getVersion() {
 		final long start = System.nanoTime();
 		log.info("getVersion - Start");
 		
+		Map<String, Object> headers = null;
+		producerTemplate.sendBodyAndHeaders("direct:tracciaDati", "getVersion", headers);
 		
 		RestResponse<String> response = new RestResponse<>();
-		//GenericResponse data = this.camelService.resetPosizioneRilancio(request);
 		response.setData("1.0.0");
 		
 		final long end = System.nanoTime();
-		//log.info("updatePosizioneRilancio - End with response = {} in {} ms", ProcessorUtil.toJson(response), (end - start) / 1000000);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
